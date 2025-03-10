@@ -1,6 +1,20 @@
 
 import java.util.*;
 
+class Pair {
+
+    int i, j;
+
+    Pair() {
+
+    }
+
+    Pair(int i, int j) {
+        this.i = i;
+        this.j = j;
+    }
+}
+
 class Solution {
 
     public int orangesRotting(int[][] grid) {
@@ -31,40 +45,39 @@ class Solution {
         int time = -1;
 
         while (!queue.isEmpty()) {
-			
-			int size = queue.size();
-			
+
+            int size = queue.size();
+
             for (int index = 0; index < size; index++) {
-				
-				
-				int i = queue.poll();
-				int j = queue.poll();
-				
-				if(visited[i][j]) continue;
-				
-				grid[i][j] = 2;
-				time += 1;
 
-				visited[i][j] = true;
+                int i = queue.poll();
+                int j = queue.poll();
 
-				for (int di = -1; di <= 1; di++) {
-					for (int dj = -1; dj <= 1; dj++) {
-						
-						if(!(di==0 ^ dj==0)) continue;
+                if (visited[i][j]) {
+                    continue;
+                }
 
+                grid[i][j] = 2;
+                time += 1;
 
-						//todo
+                visited[i][j] = true;
 
+                for (int di = -1; di <= 1; di++) {
+                    for (int dj = -1; dj <= 1; dj++) {
 
+                        if (!(di == 0 ^ dj == 0)) {
+                            continue;
+                        }
 
-						int ni = i +di;
-						int nj = j+dj;
+                        //todo
+                        int ni = i + di;
+                        int nj = j + dj;
 
-						if(ni>=0 && nj>=0 && ni<m && nj<n && !visited[ni][nj]) {
-							visited[ni][nj] = true;
-						}
-					}
-				}
+                        if (ni >= 0 && nj >= 0 && ni < m && nj < n && !visited[ni][nj]) {
+                            visited[ni][nj] = true;
+                        }
+                    }
+                }
 
             }
         }
