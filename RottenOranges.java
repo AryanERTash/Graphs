@@ -19,6 +19,10 @@ class Solution {
         }
     }
 
+    private static final int[][] directions = new int[][]{
+        {1, 0}, {0, 1}, {-1, 0}, {0, -1}
+    };
+
     public int orangesRotting(int[][] grid) {
         int m = grid.length, n = grid[0].length;
 
@@ -54,20 +58,20 @@ class Solution {
                 Pair p = queue.poll();
                 int i = p.i, j = p.j;
 
-                for (int di = -1; di <= 1; di++) {
-                    for (int dj = -1; dj <= 1; dj++) {
-                        int ni = i + di;
-                        int nj = j + dj;
+                for (int dir[] : directions) {
 
-                        if ((di == 0) ^ (dj == 0) && ni >= 0 && nj >= 0 && ni < m && nj < n && grid[ni][nj] == 1)  {
+                    int ni = i + dir[0];
+                    int nj = j + dir[1];
 
-                            spread = true;
-                            freshCount--;
-                            grid[ni][nj] = 2;
-                            queue.offer(new Pair(ni, nj));
+                    if (ni >= 0 && nj >= 0 && ni < m && nj < n && grid[ni][nj] == 1) {
 
-                        }
+                        spread = true;
+                        freshCount--;
+                        grid[ni][nj] = 2;
+                        queue.offer(new Pair(ni, nj));
+
                     }
+
                 }
 
             }
