@@ -1,3 +1,4 @@
+
 /*
  * leetcode: 994. Rotting Oranges
  */
@@ -5,81 +6,80 @@ import java.util.*;
 
 class Solution {
 
-    class Pair {
+	class Pair {
 
-        int i, j;
+		int i, j;
 
-        Pair() {
+		Pair() {
 
-        }
+		}
 
-        Pair(int i, int j) {
-            this.i = i;
-            this.j = j;
-        }
-    }
+		Pair(int i, int j) {
+			this.i = i;
+			this.j = j;
+		}
+	}
 
-    private static final int[][] directions = new int[][]{
-        {1, 0}, {0, 1}, {-1, 0}, {0, -1}
-    };
+	private static final int[][] directions = new int[][] {
+			{ 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 }
+	};
 
-    public int orangesRotting(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
+	public int orangesRotting(int[][] grid) {
+		int m = grid.length, n = grid[0].length;
 
-        Queue<Pair> queue = new ArrayDeque<>();
+		Queue<Pair> queue = new ArrayDeque<>();
 
-        int freshCount = 0;
+		int freshCount = 0;
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 2) {
-                    queue.add(new Pair(i, j));
-                } else if (grid[i][j] == 1) {
-                    freshCount++;
-                }
-            }
-        }
-        System.out.println(queue.size());
-        System.out.println(freshCount);
-        if (freshCount == 0) {
-            return 0;
-        }
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (grid[i][j] == 2) {
+					queue.add(new Pair(i, j));
+				} else if (grid[i][j] == 1) {
+					freshCount++;
+				}
+			}
+		}
 
-        int totalTime = 0;
+		if (freshCount == 0) {
+			return 0;
+		}
 
-        while (!queue.isEmpty()) {
+		int totalTime = 0;
 
-            int size = queue.size();
+		while (!queue.isEmpty()) {
 
-            boolean spread = false;
+			int size = queue.size();
 
-            for (int idx = 0; idx < size; idx++) {
+			boolean spread = false;
 
-                Pair p = queue.poll();
-                int i = p.i, j = p.j;
+			for (int idx = 0; idx < size; idx++) {
 
-                for (int dir[] : directions) {
+				Pair p = queue.poll();
+				int i = p.i, j = p.j;
 
-                    int ni = i + dir[0];
-                    int nj = j + dir[1];
+				for (int dir[] : directions) {
 
-                    if (ni >= 0 && nj >= 0 && ni < m && nj < n && grid[ni][nj] == 1) {
+					int ni = i + dir[0];
+					int nj = j + dir[1];
 
-                        spread = true;
-                        freshCount--;
-                        grid[ni][nj] = 2;
-                        queue.offer(new Pair(ni, nj));
+					if (ni >= 0 && nj >= 0 && ni < m && nj < n && grid[ni][nj] == 1) {
 
-                    }
+						spread = true;
+						freshCount--;
+						grid[ni][nj] = 2;
+						queue.offer(new Pair(ni, nj));
 
-                }
+					}
 
-            }
-            if (spread) {
-                totalTime++;
-            }
-        }
-        return freshCount == 0 ? totalTime : -1;
+				}
 
-    }
+			}
+			if (spread)
+				totalTime++;
+
+		}
+		return freshCount == 0 ? totalTime : -1;
+
+	}
 }
