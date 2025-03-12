@@ -23,16 +23,12 @@ class Solution {
 	};
 
 	public boolean isVisited(int i, int j) {
-		return (valueAt(i, j) == 0) ? mat[i][j] == 0 + (totalIteration << 1) : mat[i][j] == 1 + (totalIteration << 1);
+		return mat[i][j] == valueAt(i, j) + (totalIteration << 1);
 	}
 
 	public void markVisited(int i, int j) {
 
-		if (valueAt(i, j) == 0) {
-			mat[i][j] = 0 + (totalIteration << 1); // 2
-		} else {
-			mat[i][j] = 1 + (totalIteration << 1);
-		}
+		mat[i][j] = valueAt(i, j) + (totalIteration << 1);
 
 	}
 
@@ -83,12 +79,12 @@ class Solution {
 	public int[][] updateMatrix(int[][] mat) {
 
 		/*
-		 * The idea is to do in place change to keep track of visited cell
+		 * The idea is to do inplace change to keep track of visited cell
 		 * every new cell increase totalIteration which is how many time 2 is
-		 * to be added to mark new visited cell and not confuse it with previous one
+		 * to be added to mark new visited cell and not confuse it with previous cells
 		 * 
-		 * here we add 2 (0b10 (same as << 1)) as the last bit is preserved in successive iteration 
-		 * signifying whether the number is 0 or 1
+		 * here we add 2 (0b10 (same as << 1)) as the last bit is preserved in
+		 * successive iteration signifying whether the number was 0 or 1
 		 */
 
 		this.mat = mat;
@@ -98,7 +94,7 @@ class Solution {
 
 		int result[][] = new int[m][n];
 
-		Queue<Pair> queue = new LinkedList<>();
+		Queue<Pair> queue = new ArrayDeque<>();
 
 		for (int i = 0; i < m; i++) {
 
