@@ -35,12 +35,12 @@ class Solution {
 
 	int countDistinctIslands(int[][] grid) {
 		/*
-		 * Remember: two structurally different traersal can not have same linear string of 
-		 * visited node if we are storing normalized node/points in string
+		 * Remember: two structurally different traversal can not have same linear string of a 
+		 * visited node if we are storing normalized indexes in string
 		 * 
-		 * So you can use either use dfs or bfs but stick to same order of traversal.
+		 * So you can either use dfs or bfs but stick to same order of traversal.
 		 * 
-		 * Here use store points in form of i,j;, however to save space for delimiter,
+		 * Here we store points in form of i,j;, however to save space for delimiter,
 		 * faster hash calculation and faster matching other binary encodings can also be used.
 		 * 
 		 * We can also use trie to keep track of directions(left/right/top/bottom) istead of storing points
