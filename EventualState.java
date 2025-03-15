@@ -8,21 +8,19 @@ class Solution {
 
 	public static boolean dfs(int node, int[][] graph, int[] marker) {
 
-		marker[node] = 2;
+		marker[node] = 1;
 
 		for (int nextNode : graph[node]) {
 
-			if ((marker[nextNode] == 0 && dfs(nextNode, graph, marker)) ||
-					marker[nextNode] == 1 || marker[nextNode] == 2) {
-
-				marker[node] = 1;
+			if (marker[nextNode] == 0 && dfs(nextNode, graph, marker)) {
 				return true;
-
+			} else if (marker[nextNode] == 1) {
+				return true;
 			}
 
 		}
 
-		marker[node] = 3;
+		marker[node] = 2;
 
 		return false;
 
@@ -33,11 +31,10 @@ class Solution {
 		int marker[] = new int[graph.length];
 
 		// 0: not yet visited
-		// 1: currently visited but has cycle and not in path
-		// 2: currently in path being searched
-		// 3: visited and has a terminal node not in path
+		// 1: currently in path
+		// 2: is a safe node
 
-		// however this can aslo be done via 3 values 0 1 2 or with three arrays
+		// however this can aslo be done via three arrays
 
 		for (int i = 0; i < graph.length; i++) {
 
@@ -48,7 +45,7 @@ class Solution {
 		List<Integer> result = new ArrayList<>();
 
 		for (int i = 0; i < marker.length; i++) {
-			if (marker[i] == 3)
+			if (marker[i] == 2)
 				result.add(i);
 		}
 
