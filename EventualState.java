@@ -1,5 +1,8 @@
 /*
  * leetcode: 802. Find Eventual Safe States
+ * 
+ * 
+ * The code used DFS to find safe nodes
 */
 
 import java.util.*;
@@ -12,12 +15,11 @@ class Solution {
 
 		for (int nextNode : graph[node]) {
 
-			if (marker[nextNode] == 0 && dfs(nextNode, graph, marker)) {
-				return true;
-			} else if (marker[nextNode] == 1) {
+			if ((marker[nextNode] == 0 && dfs(nextNode, graph, marker)) 
+					|| marker[nextNode] == 1) {
 				return true;
 			}
-
+			// else (2) node is safe node
 		}
 
 		marker[node] = 2;
@@ -34,7 +36,7 @@ class Solution {
 		// 1: currently in path
 		// 2: is a safe node
 
-		// however this can aslo be done via three arrays
+		// however this can aslo be done via three arrays(visited, path, safenodes)
 
 		for (int i = 0; i < graph.length; i++) {
 
