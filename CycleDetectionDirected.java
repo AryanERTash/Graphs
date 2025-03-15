@@ -11,7 +11,7 @@ import java.util.*;
 
 class Solution {
 	private static boolean dfs(int node, ArrayList<ArrayList<Integer>> adj, int[] visited) {
-		visited[node] = 2;
+		visited[node] = 2; // visited and in path
 
 		for (int nextNode : adj.get(node)) {
 			if (visited[nextNode] == 0) {
@@ -23,6 +23,9 @@ class Solution {
 			} else if (visited[nextNode] == 2) {
 				return true; // in the path we encounter a node again
 			}
+
+			// if a node is already visited it implies there is no cycle following it hence there
+			// is no use to traverse it
 		}
 
 		visited[node] = 1; // visited
@@ -38,6 +41,8 @@ class Solution {
 		// 0 means not visited
 		// 1 means visited but not currently exploring in path
 		// 2 means visited and in path that is currently being explored
+
+		//or we can use 2 array one for visited and one for visited in current path
 
 		for (int i = 0; i < adj.size(); i++) {
 
