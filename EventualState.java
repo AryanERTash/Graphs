@@ -15,7 +15,7 @@ class Solution {
 
 		for (int nextNode : graph[node]) {
 
-			if ((marker[nextNode] == 0 && dfs(nextNode, graph, marker)) 
+			if ((marker[nextNode] == 0 && dfs(nextNode, graph, marker))
 					|| marker[nextNode] == 1) {
 				return true;
 			}

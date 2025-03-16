@@ -40,7 +40,7 @@ class Solution {
 		 * 
 		 * A linear graph with no cycle can always be partitoned in two set 
 		 * such that they are bipartite
-		 * A graph with cycle can only be bipartite if number of vertext/node in cycle are even.
+		 * A graph with cycle can only be bipartite if number of vertex/node in cycle are even.
 		 * 
 		 * in a complete bipartite graph every node frm s1 has a node in s2 to each node
 		 * total edges = n(s1) * n(s2)
