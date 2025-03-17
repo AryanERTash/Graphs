@@ -18,18 +18,17 @@ class Solution {
 
 		distance[src] = 0;
 
-		queue.offer(src);	// saving both node and distance in queue instead of a object
-		queue.offer(0);
+		queue.offer(src); // saving only source node
 
 		while (!queue.isEmpty()) {
 			int node = queue.poll();
-			int dist = queue.poll();
+			int dist = distance[node];
 
 			for (int nextNode : adj.get(node)) {
-				if (distance[nextNode] == -1) {		// bfs ensure the distance is minimum
-					distance[nextNode] = dist+1;
+				if (distance[nextNode] == -1) { // bfs ensure the distance is minimum
+					distance[nextNode] = dist + 1;
 					queue.offer(nextNode);
-					queue.offer(dist + 1);
+					
 				}
 			}
 		}
