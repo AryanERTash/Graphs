@@ -25,7 +25,7 @@ class Solution {
 			int dist = distance[node];
 
 			for (int nextNode : adj.get(node)) {
-				if (distance[nextNode] == -1) { // bfs ensure the distance is minimum
+				if (distance[nextNode] == -1) { // bfs ensure the distance is minimum for uniformly weighted graph
 					distance[nextNode] = dist + 1;
 					queue.offer(nextNode);
 					
