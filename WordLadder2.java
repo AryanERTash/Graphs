@@ -2,120 +2,94 @@ import java.util.*;
 
 class Solution {
 	public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-
 		Set<String> wordSet = new HashSet<>(wordList);
-		LinkedList<String> list = new LinkedList<>();
+		if (!wordSet.contains(endWord))
+			return new ArrayList<>();
 
-		Map<String, Integer> wordLevelMap = new HashMap<>();
+		// Bid-dir bfs
+		Map<String, List<String>> parentMap = new HashMap<>();
+		Set<String> startSet = new HashSet<>();
+		Set<String> endSet = new HashSet<>();
 
-		list.offer(beginWord);
-		wordLevelMap.put(beginWord, 1);
+		startSet.add(beginWord);
+		endSet.add(endWord);
+		boolean found = bfs(startSet, endSet, wordSet, parentMap, false);
 
-		while (!list.isEmpty()) {
-
-			int size = list.size();
-
-			// iterate to all elmenet in list for a laevel
-			for (int item = 0; item < size; item++) {
-
-				String currString = list.poll();
-				char[] currStringArr = currString.toCharArray();
-
-				// iterate to every index in string
-				for (int charIndex = 0; charIndex < currStringArr.length; charIndex++) {
-
-					char orig = currStringArr[charIndex];
-
-					for (int replacement = 'a'; replacement <= 'z'; replacement++) { // find replacement character
-
-						if (replacement == currStringArr[charIndex])
-							continue;
-
-						currStringArr[charIndex] = (char) replacement;
-						String transformedString = new String(currStringArr);
-
-						if (wordSet.contains(transformedString) && !wordLevelMap.containsKey(transformedString)) {
-							list.offer(transformedString);
-							wordLevelMap.put(transformedString,
-									wordLevelMap.get(currString) + 1);
-							wordSet.remove(transformedString);
-
-						}
-
-					}
-
-					currStringArr[charIndex] = orig;
-				}
-			}
-
-		}
-
-		list.clear();
 		List<List<String>> result = new ArrayList<>();
-
-		dfs(beginWord, endWord, list, result, wordLevelMap);
-
+		if (found) {
+			List<String> path = new ArrayList<>();
+			dfs(beginWord, endWord, parentMap, path, result);
+		}
 		return result;
-
 	}
 
-	public static void printList(List<List<String>> list) {
-		// for testing
-		for (List<String> innerList : list)
-			System.out.println(innerList);
+	private boolean bfs(Set<String> startSet, Set<String> endSet, Set<String> wordSet,
+			Map<String, List<String>> parentMap, boolean flip) {
+		if (startSet.isEmpty())
+			return false;
 
-	}
+		if (startSet.size() > endSet.size())
+			return bfs(endSet, startSet, wordSet, parentMap, !flip); 
 
-	public static void dfs(String currStr, String endString,
-			LinkedList<String> list,
-			List<List<String>> result,
-			Map<String, Integer> wordLevelMap) {
+		wordSet.removeAll(startSet);
+		Set<String> nextSet = new HashSet<>();
+		boolean found = false;
 
-		list.addLast(currStr);
-		if (currStr.equals(endString)) {
-			result.add(new ArrayList<>(list));
-			list.removeLast();
-			return;
-		}
+		for (String word : startSet) {
+			char[] wordArr = word.toCharArray();
 
-		char[] currStrArr = currStr.toCharArray();
-		int currLevel = wordLevelMap.get(currStr);
+			for (int i = 0; i < wordArr.length; i++) {
+				char original = wordArr[i];
 
-		for (int charInd = 0; charInd < currStr.length(); charInd++) {
-			char orig = currStrArr[charInd];
-			for (int replace = 'a'; replace <= 'z'; replace++) {
+				for (char ch = 'a'; ch <= 'z'; ch++) {
+					if (ch == original)
+						continue;
 
-				if (replace == currStrArr[charInd])
-					continue;
+					wordArr[i] = ch;
+					String newWord = new String(wordArr);
 
-				currStrArr[charInd] = (char) replace;
+					if (!wordSet.contains(newWord))
+						continue;
 
-				String nextStr = new String(currStrArr);
+					nextSet.add(newWord);
+					String key = flip ? newWord : word;
+					String val = flip ? word : newWord;
 
-				int nextLevel = wordLevelMap.getOrDefault(nextStr, -1);
-
-				if (currLevel + 1 == nextLevel) {
-					dfs(nextStr, endString, list, result, wordLevelMap);
+					parentMap.computeIfAbsent(key, k -> new ArrayList<>()).add(val);
+					if (endSet.contains(newWord))
+						found = true;
 				}
-
+				wordArr[i] = original; 
+				
 			}
-
-			currStrArr[charInd] = orig;
 		}
 
-		list.removeLast();
+		return found || bfs(nextSet, endSet, wordSet, parentMap, flip);
+	}
 
+	private void dfs(String word, String endWord, Map<String, List<String>> parentMap,
+			List<String> path, List<List<String>> result) {
+		path.add(word);
+		if (word.equals(endWord)) {
+			result.add(new ArrayList<>(path));
+		} else {
+			for (String next : parentMap.getOrDefault(word, new ArrayList<>())) {
+				dfs(next, endWord, parentMap, path, result);
+			}
+		}
+		path.remove(path.size() - 1);
 	}
 
 	// public static void main(String[] args) {
-	// Solution s = new Solution();
-
+	// Solution sol = new Solution();
 	// String beginWord = "hit";
 	// String endWord = "cog";
 	// List<String> wordList = Arrays.asList("hot", "dot", "dog", "lot", "log",
 	// "cog");
 
-	// printList(s.findLadders(beginWord, endWord, wordList));
+	// List<List<String>> result = sol.findLadders(beginWord, endWord, wordList);
+	// for (List<String> path : result) {
+	// System.out.println(path);
 	// }
-
+	// }
 }
