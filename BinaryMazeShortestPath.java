@@ -53,7 +53,7 @@ class Solution {
 					int nextWeight = weight + 1;
 
 					if (ni >= 0 && nj >= 0 && ni < m && nj < n &&
-							(ni != 0 || nj != 0) && grid[ni][nj] == 0
+							grid[ni][nj] == 0
 							&& nextWeight < distance[ni][nj]) {
 
 						if (ni == m - 1 && nj == n - 1)
