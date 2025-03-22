@@ -1,5 +1,8 @@
 import java.util.*;
 
+/*
+ * leetcode :https://leetcode.com/problems/shortest-path-in-binary-matrix/description/
+ */
 class Tuple {
 	int i, j, weight;
 
@@ -38,12 +41,16 @@ class Solution {
 
 		while (!queue.isEmpty()) {
 			Tuple tp = queue.poll();
+			int i = tp.i;	// unpack object
+			int j = tp.j;
+			int weight = tp.weight;
+			boolean first = true;
 
 			for (int di = -1; di <= 1; di++) {
 				for (int dj = -1; dj <= 1; dj++) {
-					int ni = tp.i + di;
-					int nj = tp.j + dj;
-					int nextWeight = tp.weight + 1;
+					int ni = i + di;
+					int nj = j + dj;
+					int nextWeight = weight + 1;
 
 					if (ni >= 0 && nj >= 0 && ni < m && nj < n &&
 							(ni != 0 || nj != 0) && grid[ni][nj] == 0
@@ -51,9 +58,18 @@ class Solution {
 
 						if (ni == m - 1 && nj == n - 1)
 							return nextWeight;
+						Tuple nextTpl = tp;
+						if(first) {
+							nextTpl.i=ni;	// object reuse
+							nextTpl.j=nj;
+							nextTpl.weight = nextWeight;
+							first = false;
+						} else {
+							nextTpl = new Tuple(ni, nj, nextWeight);
+						}
 
 						distance[ni][nj] = nextWeight;
-						queue.offer(new Tuple(ni, nj, nextWeight));
+						queue.offer(nextTpl);
 
 					}
 				}
