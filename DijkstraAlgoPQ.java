@@ -29,25 +29,25 @@ class Solution {
 
 		ArrayList<Integer> dist = new ArrayList<>();
 		for (int i = 0; i < adj.size(); i++)
-			dist.add((int)1e9); // may overflow if adding to Integer.MAX_VALUE thats why use 1e9
+			dist.add((int) 1e9); // may overflow if adding to Integer.MAX_VALUE thats why use 1e9
 
 		dist.set(src, 0);
 
 		queue.add(new iPair(src, 0));
 
-		
-		while(!queue.isEmpty()) {
+		while (!queue.isEmpty()) {
 			iPair currIPair = queue.poll();
 
-			for(iPair nextPair : adj.get(currIPair.first)) {
+			if (dist.get(currIPair.first) < currIPair.second)
+				continue;
+
+			for (iPair nextPair : adj.get(currIPair.first)) {
 				int upDit = currIPair.second + nextPair.second;
-				if(upDit < dist.get(nextPair.first)) {
+				if (upDit < dist.get(nextPair.first)) {
 					dist.set(nextPair.first, upDit);
 					queue.offer(new iPair(nextPair.first, upDit));
 				}
 
-				
-				
 			}
 		}
 
