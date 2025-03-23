@@ -36,10 +36,12 @@ class Solution {
 		queue.add(new iPair(src, 0));
 
 		while (!queue.isEmpty()) {
-			iPair currIPair = queue.poll();
+			iPair currIPair = queue.poll(); // once we visit a node it will no longer be updated again but it can have bigger weight values still in priority queue
 
-			if (dist.get(currIPair.first) < currIPair.second)
+			if (dist.get(currIPair.first) < currIPair.second) {
+
 				continue;
+			}
 
 			for (iPair nextPair : adj.get(currIPair.first)) {
 				int upDit = currIPair.second + nextPair.second;
