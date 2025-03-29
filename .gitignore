@@ -85,3 +85,8 @@ ehthumbs.db
 *.swp
 *.bak
 *.tmp
+
+
+#custom files
+
+TestCase.java
