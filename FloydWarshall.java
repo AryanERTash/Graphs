@@ -1,5 +1,6 @@
 /*
  * GFG: https://www.geeksforgeeks.org/problems/implementing-floyd-warshall2042/1
+ * Instead of floyd warshall we can use dijkstra on each node giving complexity EVlogV
  */
 
 class Solution {
