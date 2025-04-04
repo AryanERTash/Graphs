@@ -17,10 +17,10 @@ public class DisjointSet {
 		ds.union(4, 5);
 		ds.union(6, 7);
 		ds.union(5, 6);
+		System.out.println(Arrays.toString(ds.size));
 		ds.union(3, 7);
 		
 		System.out.println(ds.findUltimateParent(1) == ds.findUltimateParent(7));
-		System.out.println(Arrays.toString(ds.size));
 		System.out.println(ds.findUltimateParent(5));
 		System.out.println(Arrays.toString(ds.size));
 	}
@@ -83,6 +83,10 @@ class DisjointSetBySize {
 			return node;
 
 		int f = findUltimateParent(parent[node]);
+
+		if(f!=parent[node]) {
+			size[parent[node]] -= size[node];
+		}
 
 
 		return parent[node] = f; // Path compression
