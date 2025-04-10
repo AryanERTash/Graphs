@@ -58,7 +58,7 @@ class Solution {
 			for (int j = 0; j < m; j++) {
 				if (grid[i][j] == 0)
 					continue;
-				maxIslandSize = Math.max(maxIslandSize, 1);	// there is minimum one element
+				maxIslandSize = Math.max(maxIslandSize, 1); // there is minimum one element
 
 				for (int[] VEC : DIRECTIONS) {
 					int ni = i + VEC[0];
