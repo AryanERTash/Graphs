@@ -84,9 +84,9 @@ class DisjointSetBySize {
 
 		int f = findUltimateParent(parent[node]);
 
-		if(f!=parent[node]) {
-			size[parent[node]] -= size[node];
-		}
+		// if(f!=parent[node]) {
+		// 	size[parent[node]] -= size[node];
+		// }
 
 
 		return parent[node] = f; // Path compression
