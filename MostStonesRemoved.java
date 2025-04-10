@@ -1,7 +1,9 @@
+
 /*
  * Leetcode: 947. Most Stones Removed with Same Row or Column
  * 
 */
+import java.util.*;;
 
 class DisjointSet {
 	int parent[], size[];
@@ -50,23 +52,20 @@ class Solution {
 			n = Math.max(n, p[0] + 1);
 			m = Math.max(m, p[1] + 1);
 		}
-		
-		
 
 		DisjointSet djSet = new DisjointSet(n + m);
 
-
-		for(int[] p : stones ) {
+		for (int[] p : stones) {
 			djSet.union(p[0], p[1] + n);
 		}
 
 		int componentCount = 0;
 		for (int i = 0; i < djSet.size.length; i++) {
 
-			if(djSet.size[i] > 1 && djSet.parent[i] == i) componentCount++;
-			
-		}
+			if (djSet.size[i] > 1 && djSet.parent[i] == i)
+				componentCount++;
 
+		}
 
 		return stones.length - componentCount;
 
